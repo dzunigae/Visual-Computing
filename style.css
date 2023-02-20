@@ -1,8 +1,25 @@
-html, body {
-  margin: 0;
-  padding: 0;
-}
-
 canvas {
   display: block;
+}
+
+button {
+  display: inline-block;
+}
+
+h1 {
+  text-align: center;
+}
+
+.container {
+  display: flex;
+}
+
+.column {
+  flex: 1;
+  text-align: center;
+}
+
+.little-margin {
+  border: 2px solid black;
+  padding: 10px;
 }
