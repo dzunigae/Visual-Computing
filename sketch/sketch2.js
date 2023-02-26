@@ -1,22 +1,41 @@
-let x = 0;
+let hearts = [];
 
 function setup() {
   createCanvas(1340, 679);
+  noStroke();
+
+  //Crear los objetos en el arreglo
+  for (let i = 0; i <= 50; i++) {
+    let x = random(width);
+    let y = random(height);
+    const size = 20;
+    let color = [random(255), random(255), random(255)];
+    hearts.push({x: x, y: y, size: size, color: color, speed: random(10)})
+  }
 }
 
 function draw() {
-  describe("pink square with red heart in the bottom right corner");
   background("pink");
 
-  fill("red");
-  noStroke();
-  ellipse(67, 67, 20, 20);
-  ellipse(83, 67, 20, 20);
-  triangle(91, 73, 75, 95, 59, 73);
+  //Actualizar la posición de cada corazón
+  for(let i = 0; i <= 50; i++){
+    hearts[i].x += hearts[i].speed;
 
-  fill("blue");
-  noStroke();
-  ellipse(700, 500, 20, 20);
-  ellipse(716, 500, 20, 20);
-  triangle(700, 505, 716, 505, 708, 530);
+    if(hearts[i].x < 0 || hearts[i].x > width){
+      hearts[i].speed *= -1;
+    }
+  }
+
+  //Dibujar cada corazón en la posición indicada
+  for(let i = 0; i <= 50; i++){
+    let x =   hearts[i].x;
+    let y =   hearts[i].y;
+    let size =   hearts[i].size;
+    let color =   hearts[i].color;
+
+    fill(...color);
+    ellipse(x, y, size, size);
+    ellipse(x + 16, y, size, size);
+    triangle(x + 24, y + 6, (x + (x + 16)) / 2, y + 28, x - 8, y + 6);
+  }
 }
