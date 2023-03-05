@@ -11,31 +11,59 @@ function preload() {
 
 function setup() {
   createCanvas(1341, 680);
-  let button1 = createButton("Botón 1");
+
+  //+0: Rojo, +1: Verde, +2: Azul
+
+  //Botón 1
+  let button1 = createButton("Deuteranopia");
   button1.position(80, 40);
   button1.mousePressed(function () {
     modifiedImage.loadPixels();
     for (let i = 0; i < modifiedImage.width * modifiedImage.height; i++) {
-      let greenValue = modifiedImage.pixels[i * 4 + 1];
-      if (greenValue != 0) {
-        modifiedImage.pixels[i * 4 + 1] = 0;
+      let g = modifiedImage.pixels[i * 4 + 1];
+      let r = modifiedImage.pixels[i * 4 + 0];
+      if(g>r){
+        modifiedImage.pixels[i * 4 + 0] = g;
+        modifiedImage.pixels[i * 4 + 1] = g;
+      }else if(r>g){
+        modifiedImage.pixels[i * 4 + 0] = r;
+        modifiedImage.pixels[i * 4 + 1] = r;
+      }else{
+        modifiedImage.pixels[i * 4 + 2] -= 200;
       }
     }
     modifiedImage.updatePixels();
   });
 
-  let button2 = createButton("Botón 2");
-  button2.position(180, 40);
+  //Botón 2
+  let button2 = createButton("Protanopia");
+  button2.position(button1.x + button1.width + 10, 40);
   button2.mousePressed(function () {
     //Función del botón 2
+  });
+
+  //Botón3
+  let button3 = createButton("Tritanopia");
+  button3.position(button2.x + button2.width + 10, 40);
+  button3.mousePressed(function () {
+    //Función del botón 2
+  });
+
+  //Botón4
+  let button4 = createButton("Retornar a original");
+  button4.position(button3.x + button3.width + 10, 40);
+  button4.mousePressed(function () {
+    originalImage.loadPixels();
+    modifiedImage = originalImage.get();
+    modifiedImage.loadPixels();
   });
 }
 
 function draw() {
   background("pink");
 
-  let maxWidth = 600;
-  let maxHeight = 600;
+  let maxWidth = 400;
+  let maxHeight = 400;
 
   let oImgWidth = originalImage.width;
   let oImgHeight = originalImage.height;
