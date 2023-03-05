@@ -4,7 +4,7 @@ let y = 0;
 function setup() {
   createCanvas(1920, 1200);
   frameRate(20);
-  bg = loadImage('../assets/2.jpg')
+  bg = loadImage('../assets/sketch/1/2.jpg')
 }
 
 function draw() {
