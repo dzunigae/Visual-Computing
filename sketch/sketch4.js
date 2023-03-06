@@ -40,6 +40,21 @@ function setup() {
     originalImage.loadPixels();
     modifiedImage = originalImage.get();
     modifiedImage.loadPixels();
+    /*
+    for (let i = 0; i < modifiedImage.width * modifiedImage.height; i++) {
+      let r = modifiedImage.pixels[i * 4 + 0];
+      let g = modifiedImage.pixels[i * 4 + 1];
+      let b = modifiedImage.pixels[i * 4 + 2];
+      if(r>=g){
+        modifiedImage.pixels[i * 4 + 0] = g;
+      }
+
+      //modifiedImage.pixels[i * 4 + 0] = (g + r) / 2;
+      //modifiedImage.pixels[i * 4 + 2] = b + (b*0.9);
+    }
+*/
+
+    /*
     for (let i = 0; i < modifiedImage.width * modifiedImage.height; i++) {
       let g = modifiedImage.pixels[i * 4 + 1];
       let r = modifiedImage.pixels[i * 4 + 0];
@@ -70,6 +85,17 @@ function setup() {
         modifiedImage.pixels[i * 4 + 0] = r - 150;
       }
     }
+*/
+
+    for (let i = 0; i < modifiedImage.width * modifiedImage.height; i++) {
+      let r = modifiedImage.pixels[i * 4 + 0];
+      let g = modifiedImage.pixels[i * 4 + 1];
+      let b = modifiedImage.pixels[i * 4 + 2];
+
+      modifiedImage.pixels[i * 4 + 1] = (g + b) / 2 ;
+      modifiedImage.pixels[i * 4 + 2] = (g + b) / 2 ;
+    }
+
     modifiedImage.updatePixels();
   });
 
