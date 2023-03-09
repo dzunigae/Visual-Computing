@@ -24,25 +24,7 @@ function setup() {
     originalImage.loadPixels();
     modifiedImage = originalImage.get();
     modifiedImage.loadPixels();
-    for (let i = 0; i < modifiedImage.width * modifiedImage.height; i++) {
-      let g = modifiedImage.pixels[i * 4 + 1];
-      let r = modifiedImage.pixels[i * 4 + 0];
-      //let b = modifiedImage.pixels[i * 4 + 2];
-      modifiedImage.pixels[i * 4 + 1] = ((g + r) / 2);
-      modifiedImage.pixels[i * 4 + 0] = ((g + r) / 2);
-      g = modifiedImage.pixels[i * 4 + 1];
-      if(g<=130){
-        if(g + g*0.4 >= 130){
-          modifiedImage.pixels[i * 4 + 1] = 130;
-          modifiedImage.pixels[i * 4 + 0] = 130;
-        }
-        modifiedImage.pixels[i * 4 + 1] = g + g*0.4;
-        modifiedImage.pixels[i * 4 + 0] = g + g*0.4;
-      }
-      modifiedImage.pixels[i * 4 + 1] *= 0.9;
-      modifiedImage.pixels[i * 4 + 0] *= 0.9;
-      modifiedImage.pixels[i * 4 + 2] *= 0.9;
-    }
+    //Código
     modifiedImage.updatePixels();
   });
 
@@ -53,16 +35,7 @@ function setup() {
     originalImage.loadPixels();
     modifiedImage = originalImage.get();
     modifiedImage.loadPixels();
-    for (let i = 0; i < modifiedImage.width * modifiedImage.height; i++) {
-      let r = modifiedImage.pixels[i * 4 + 0];
-      let g = modifiedImage.pixels[i * 4 + 1];
-      let b = modifiedImage.pixels[i * 4 + 2];
-
-      modifiedImage.pixels[i * 4 + 1] = (g + r) / 2 ;
-      modifiedImage.pixels[i * 4 + 0] = (g + r) / 2 ;
-      
-    }
-
+    //Código
     modifiedImage.updatePixels();
   });
 
@@ -73,34 +46,7 @@ function setup() {
     originalImage.loadPixels();
     modifiedImage = originalImage.get();
     modifiedImage.loadPixels();
-
-    for (let i = 0; i < modifiedImage.width * modifiedImage.height; i++) {
-      let g = modifiedImage.pixels[i * 4 + 1];
-      let r = modifiedImage.pixels[i * 4 + 0];
-      let b = modifiedImage.pixels[i * 4 + 2];
-
-      if (b > r && b > g) {
-        if (r >= g) {
-          modifiedImage.pixels[i * 4 + 2] = 0;
-        } else {
-          modifiedImage.pixels[i * 4 + 2] = (g + b) / 2 - 50;
-          modifiedImage.pixels[i * 4 + 1] = (g + b) / 2 - 50;
-        }
-      } else if (b > r && g > b) {
-        modifiedImage.pixels[i * 4 + 1] = (g + b) / 2 + 50;
-        modifiedImage.pixels[i * 4 + 2] = (g + b) / 2 + 50;
-      } else if (r > b && g > b) {
-        if (abs(r - g) < 20) {
-          modifiedImage.pixels[i * 4 + 0] = r;
-          modifiedImage.pixels[i * 4 + 1] = g - g * 0.1;
-          modifiedImage.pixels[i * 4 + 2] = b + 250;
-        } else {
-          modifiedImage.pixels[i * 4 + 0] = r;
-          modifiedImage.pixels[i * 4 + 1] = g - g * 0.1;
-          modifiedImage.pixels[i * 4 + 2] = b + 130;
-        }
-      }
-    }
+    //Código
     modifiedImage.updatePixels();
   });
 
