@@ -1,6 +1,10 @@
 let originalImage;
 let modifiedImage;
 let proposedImage;
+let matrixRGB_LMS;
+let matrixRGB_LMSInverse;
+let matrixProt;
+let matrixDeut;
 
 function preload() {
   originalImage = loadImage("../assets/sketch/2/prueba.png", function () {
@@ -10,6 +14,10 @@ function preload() {
     proposedImage = originalImage.get();
     proposedImage.loadPixels();
   });
+  matrixRGB_LMS = [[17.8824, 43.5161, 4.1194], [3.4557, 27.1554, 3.8671], [0.0300, 0.1843, 1.4671]];
+  matrixRGB_LMSInverse = [[0.0809, -0.1305, 0.1167], [-0.0102, 0.0540, -0.1136], [-0.0004, -0.0041, 0.6935]];
+  matrixProt = [[0, 2.0234, -2.5258],[0, 1, 0],[0, 0, 1]];
+  matrixDeut = [[1, 0, 0],[0.4942, 0, 1.2483],[0, 0, 1]];
 }
 
 function multiplyMatrices(a, b) {
@@ -48,7 +56,20 @@ function setup() {
     originalImage.loadPixels();
     modifiedImage = originalImage.get();
     modifiedImage.loadPixels();
-    //Código
+
+    for (let i = 0; i < modifiedImage.width * modifiedImage.height; i++) {
+      let r = modifiedImage.pixels[i * 4 + 0];
+      let g = modifiedImage.pixels[i * 4 + 1];
+      let b = modifiedImage.pixels[i * 4 + 2];
+      let matrixRGB = [[r],[g],[b]];
+      let matrixLMS = multiplyMatrices(matrixRGB_LMS, matrixRGB);
+      let matrixLMS_modified = multiplyMatrices(matrixDeut, matrixLMS);
+      let result = multiplyMatrices(matrixRGB_LMSInverse, matrixLMS_modified);
+      modifiedImage.pixels[i * 4 + 0] = result[0][0];
+      modifiedImage.pixels[i * 4 + 1] = result[1][0];
+      modifiedImage.pixels[i * 4 + 2] = result[2][0];
+    }
+
     modifiedImage.updatePixels();
   });
 
@@ -59,12 +80,19 @@ function setup() {
     originalImage.loadPixels();
     modifiedImage = originalImage.get();
     modifiedImage.loadPixels();
-    
-    
-    let matrixB = [[147],[82], [95]];
-    let matrixA = [[0, 2.0234, -2.5258], [0, 1, 0], [0, 0, 1]];
-    let result = multiplyMatrices(matrixA, matrixB);
-    console.log(result); // muestra la matriz resultante en la consola
+
+    for (let i = 0; i < modifiedImage.width * modifiedImage.height; i++) {
+      let r = modifiedImage.pixels[i * 4 + 0];
+      let g = modifiedImage.pixels[i * 4 + 1];
+      let b = modifiedImage.pixels[i * 4 + 2];
+      let matrixRGB = [[r],[g],[b]];
+      let matrixLMS = multiplyMatrices(matrixRGB_LMS, matrixRGB);
+      let matrixLMS_modified = multiplyMatrices(matrixProt, matrixLMS);
+      let result = multiplyMatrices(matrixRGB_LMSInverse, matrixLMS_modified);
+      modifiedImage.pixels[i * 4 + 0] = result[0][0];
+      modifiedImage.pixels[i * 4 + 1] = result[1][0];
+      modifiedImage.pixels[i * 4 + 2] = result[2][0];
+    }
 
     modifiedImage.updatePixels();
   });
@@ -76,7 +104,11 @@ function setup() {
     originalImage.loadPixels();
     modifiedImage = originalImage.get();
     modifiedImage.loadPixels();
-    //Código
+    for (let i = 0; i < modifiedImage.width * modifiedImage.height; i++) {
+      modifiedImage.pixels[i * 4 + 0] = 255;
+      modifiedImage.pixels[i * 4 + 1] = 255;
+      modifiedImage.pixels[i * 4 + 2] = 255;
+    }
     modifiedImage.updatePixels();
   });
 
