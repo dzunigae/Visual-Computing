@@ -12,6 +12,30 @@ function preload() {
   });
 }
 
+function multiplyMatrices(a, b) {
+  let rowsA = a.length;
+  let colsA = a[0].length;
+  let rowsB = b.length;
+  let colsB = b[0].length;
+  let result = new Array(rowsA);
+  if (colsA != rowsB) {
+    console.log("Error: Las dimensiones de las matrices no coinciden");
+    return null;
+  }
+  for (let i = 0; i < rowsA; i++) {
+    result[i] = new Array(colsB);
+    for (let j = 0; j < colsB; j++) {
+      let sum = 0;
+      for (let k = 0; k < colsA; k++) {
+        sum += a[i][k] * b[k][j];
+      }
+      result[i][j] = sum;
+    }
+  }
+  return result;
+}
+
+
 function setup() {
   createCanvas(1341, 680);
 
@@ -35,7 +59,13 @@ function setup() {
     originalImage.loadPixels();
     modifiedImage = originalImage.get();
     modifiedImage.loadPixels();
-    //Código
+    
+    
+    let matrixB = [[147],[82], [95]];
+    let matrixA = [[0, 2.0234, -2.5258], [0, 1, 0], [0, 0, 1]];
+    let result = multiplyMatrices(matrixA, matrixB);
+    console.log(result); // muestra la matriz resultante en la consola
+
     modifiedImage.updatePixels();
   });
 
