@@ -96,6 +96,19 @@ function setup() {
     }
 
     modifiedImage.updatePixels();
+
+    proposedImage = originalImage.get();
+    proposedImage.loadPixels();
+
+    for (let i = 0; i < proposedImage.width * proposedImage.height; i++) {
+      let g = proposedImage.pixels[i * 4 + 1];
+      let r = g * (ad / 2) + proposedImage.pixels[i * 4 + 0] * ((2 - ad) / 2);
+      let b = g * (ad / 2) + proposedImage.pixels[i * 4 + 2] * ((2 - ad) / 2);
+      proposedImage.pixels[i * 4 + 0] = r;
+      proposedImage.pixels[i * 4 + 2] = b;
+    }
+
+    proposedImage.updatePixels();
   });
 
   //Botón 2
@@ -124,12 +137,12 @@ function setup() {
     proposedImage = originalImage.get();
     proposedImage.loadPixels();
 
-    for(let i = 0; i < proposedImage.width * proposedImage.height; i++){
+    for (let i = 0; i < proposedImage.width * proposedImage.height; i++) {
       let r = proposedImage.pixels[i * 4 + 0];
-      let g = (proposedImage.pixels[i * 4 + 1] + r)/2;
-      let b = (proposedImage.pixels[i * 4 + 2] + r)/2;
-
-
+      let g = r * (ap / 2) + proposedImage.pixels[i * 4 + 1] * ((2 - ap) / 2);
+      let b = r * (ap / 2) + proposedImage.pixels[i * 4 + 2] * ((2 - ap) / 2);
+      proposedImage.pixels[i * 4 + 1] = g;
+      proposedImage.pixels[i * 4 + 2] = b;
     }
 
     proposedImage.updatePixels();
@@ -142,6 +155,7 @@ function setup() {
     originalImage.loadPixels();
     modifiedImage = originalImage.get();
     modifiedImage.loadPixels();
+
     for (let i = 0; i < modifiedImage.width * modifiedImage.height; i++) {
       let r = modifiedImage.pixels[i * 4 + 0];
       let g = modifiedImage.pixels[i * 4 + 1];
@@ -154,41 +168,37 @@ function setup() {
       modifiedImage.pixels[i * 4 + 1] = result[1][0];
       modifiedImage.pixels[i * 4 + 2] = result[2][0];
     }
+
     modifiedImage.updatePixels();
+
+    proposedImage = originalImage.get();
+    proposedImage.loadPixels();
+
+    for (let i = 0; i < proposedImage.width * proposedImage.height; i++) {
+      let r = proposedImage.pixels[i * 4 + 0];
+      let g = proposedImage.pixels[i * 4 + 1];
+      let b = proposedImage.pixels[i * 4 + 2];
+      let fr = g*(ad/2) + r*((2-ad)/2);
+      let fg = r*(ap/2) + g*((2-ap)/2);
+      let fb = r*(ap/4) + g*(ad/4) + b*((4-ap-ad)/4);
+      proposedImage.pixels[i * 4 + 0] = fr;
+      proposedImage.pixels[i * 4 + 1] = fg;
+      proposedImage.pixels[i * 4 + 2] = fb;
+    }
+
+    proposedImage.updatePixels();
   });
 
   //Botón4
-  let button4 = createButton("Tritanopia");
+  let button4 = createButton("Retornar a original");
   button4.position(button3.x + button3.width + 10, 40);
   button4.mousePressed(function () {
-    originalImage.loadPixels();
-    modifiedImage = originalImage.get();
-    modifiedImage.loadPixels();
-    for (let i = 0; i < modifiedImage.width * modifiedImage.height; i++) {
-      modifiedImage.pixels[i * 4 + 0] = 255;
-      modifiedImage.pixels[i * 4 + 1] = 255;
-      modifiedImage.pixels[i * 4 + 2] = 255;
-    }
-    modifiedImage.updatePixels();
-  });
-
-  //Botón5
-  let button5 = createButton("Retornar a original");
-  button5.position(button4.x + button4.width + 10, 40);
-  button5.mousePressed(function () {
     originalImage.loadPixels();
     modifiedImage = originalImage.get();
     modifiedImage.loadPixels();
     proposedImage = originalImage.get();
     proposedImage.loadPixels();
   });
-/*
-  //Slider 1
-  let sliderap = createSlider(0, 1, 0, 0.01);
-  sliderap.input(function() {
-    ap = sliderap.value();
-  });
-*/
 }
 
 function draw() {
@@ -226,6 +236,4 @@ function draw() {
   textSize(25);
   fill(0);
   text("Imagen modificada", 2 * (oImgWidth + 50) + oImgWidth / 4, 170);
-
-  //text("Variable: " + ap, 10, 20);
 }
